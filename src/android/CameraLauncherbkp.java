@@ -19,6 +19,7 @@
 package org.apache.cordova.camera;
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,7 +57,7 @@ import android.util.Log;
  * and returns the captured image.  When the camera view is closed, the screen displayed before
  * the camera view was shown is redisplayed.
  */
-public class CameraLauncher extends CordovaPlugin implements MediaScannerConnectionClient {
+public class CameraLauncherbkp extends CordovaPlugin implements MediaScannerConnectionClient {
 
     private static final int DATA_URL = 0;              // Return base64 encoded string
     private static final int FILE_URI = 1;              // Return file uri (content://media/external/images/media/2 for Android)
@@ -447,24 +448,14 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
 
 private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
         // Create an ExifHelper to save the exif data that is lost during compression
-        
-//        String modifiedPath = getTempDirectoryPath() + "/modified.jpg";
-//
-//        OutputStream os = new FileOutputStream(modifiedPath);
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, this.mQuality, os);
-//        os.close();
-//
-//        // Some content: URIs do not map to file paths (e.g. picasa).
-//        String realPath = FileHelper.getRealPath(uri, this.cordova);
-	String realPath = FileHelper.getRealPath(uri, this.cordova);
-    // Get filename from uri
+        String modifiedPath = getTempDirectoryPath() + "/modified.jpg";
 
-    String fileName = realPath != null && !realPath.isEmpty() ?
-        realPath.substring(realPath.lastIndexOf('/') + 1) : System.currentTimeMillis()+"." + (this.encodingType == JPEG ? "jpg" : "png");
-        String modifiedPath = getTempDirectoryPath() + "/" + fileName;
-    OutputStream os = new FileOutputStream(modifiedPath);
-    bitmap.compress(Bitmap.CompressFormat.JPEG, this.mQuality, os);
-    os.close();
+        OutputStream os = new FileOutputStream(modifiedPath);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, this.mQuality, os);
+        os.close();
+
+        // Some content: URIs do not map to file paths (e.g. picasa).
+        String realPath = FileHelper.getRealPath(uri, this.cordova);
         ExifHelper exif = new ExifHelper();
         if (realPath != null && this.encodingType == JPEG) {
             try {

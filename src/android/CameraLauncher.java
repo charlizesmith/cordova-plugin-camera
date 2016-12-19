@@ -314,6 +314,8 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
           cropIntent.putExtra("aspectX", 1);
           cropIntent.putExtra("aspectY", 1);
       }
+	    
+	    //cropped file added current time stamp for edited image. coz in previous code it overided the image with new editex one
       // create new file handle to get full resolution crop
       croppedUri = Uri.fromFile(new File(getTempDirectoryPath(), System.currentTimeMillis() + ".jpg"));
       cropIntent.putExtra("output", croppedUri);
